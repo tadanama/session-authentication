@@ -46,6 +46,13 @@ app.get("/home", isUserLoggedIn,(req, res) => {
     res.render("home.ejs");
 })
 
+// Destroy the session
+// The session object for the session id will be removed from the session store
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/");
+})
+
 // Middleware to determine if the incoming request is from a user that is already logged in
 function isUserLoggedIn(req, res, next) {
     // When the user is already authenticated, it should have the req.session.user object because it was set in /login post route
