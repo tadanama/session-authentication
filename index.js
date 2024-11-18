@@ -39,8 +39,12 @@ app.post("/login", (req, res) => {
     if (password !== "123") return res.status(401).render("login.ejs", { error: "Invalid password"});
 
     req.session.user = username;
-    res.render("home.ejs");
+    res.redirect("/home");
 });
+
+app.get("/home", (req, res) => {
+    res.render("home.ejs");
+})
 
 // Server listening for requests
 app.listen(port, () => console.log(`Listening on port ${port}`));
