@@ -50,6 +50,7 @@ app.get("/home", isUserLoggedIn,(req, res) => {
 // The session object for the session id will be removed from the session store
 app.get("/logout", (req, res) => {
     req.session.destroy();
+    res.clearCookie("sesiTemuduga");
     res.redirect("/");
 })
 
