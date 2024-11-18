@@ -21,5 +21,9 @@ app.use(
 	})
 );
 
+app.get("/", (req, res) => {
+    res.render("login.ejs");
+})
+
 // Server listening for requests
 app.listen(port, () => console.log(`Listening on port ${port}`));
