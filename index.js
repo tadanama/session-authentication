@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import env from "dotenv";
+import connectPgSimple from "connect-pg-simple";
 
 // Allow access to the environment variables inside .env file through process.env.VARIABLE_NAME
 env.config();
@@ -8,12 +9,19 @@ env.config();
 const app = express();
 const port = 3000;
 
+// Configure connect-pg-simple to use postgres as session store
+const PostgresSession = connectPgSimple(session);
+const sessionStore = new PostgresSession({
+    conString: process.env.SESSION_STORE_DB_URL,
+});
+
 // Enable express to parse the form data (url encoded) to the req.body
 app.use(express.urlencoded({extended:false}))
 
 // Set and configure express-session as middleware
 app.use(
 	session({
+        store: sessionStore,
 		secret: process.env.SESSION_SECRET,
 		saveUninitialized: false,
 		resave: false,
