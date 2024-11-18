@@ -25,7 +25,7 @@ app.use(
 );
 
 // Render the login page whne user visits '/' endpoint
-app.get("/", (req, res) => {
+app.get("/", preventLoginPage,(req, res) => {
     res.render("login.ejs");
 })
 
@@ -53,6 +53,16 @@ function isUserLoggedIn(req, res, next) {
         next();
     } else {
         res.redirect("/");
+    }
+}
+
+// Middleware to prevent authenticated user from accessing the login page
+function preventLoginPage(req, res, next){
+    // Allow users that don't have the a session object that identifies them to render the login page
+    if (!req.session.user){
+        next();
+    } else {
+        res.redirect("/home");
     }
 }
 
