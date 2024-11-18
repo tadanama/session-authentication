@@ -21,6 +21,7 @@ app.use(
 	})
 );
 
+// Render the login page whne user visits '/' endpoint
 app.get("/", (req, res) => {
     res.render("login.ejs");
 })
