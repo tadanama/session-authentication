@@ -42,9 +42,19 @@ app.post("/login", (req, res) => {
     res.redirect("/home");
 });
 
-app.get("/home", (req, res) => {
+app.get("/home", isUserLoggedIn,(req, res) => {
     res.render("home.ejs");
 })
+
+// Middleware to determine if the incoming request is from a user that is already logged in
+function isUserLoggedIn(req, res, next) {
+    // When the user is already authenticated, it should have the req.session.user object because it was set in /login post route
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect("/");
+    }
+}
 
 // Server listening for requests
 app.listen(port, () => console.log(`Listening on port ${port}`));
