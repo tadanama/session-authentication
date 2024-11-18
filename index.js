@@ -24,13 +24,13 @@ app.use(
 	})
 );
 
-// Render the login page whne user visits '/' endpoint
+// Render the login page when user visits '/' endpoint
 app.get("/", preventLoginPage,(req, res) => {
     res.render("login.ejs");
 })
 
 // Authenticate user credentials. Send back error message if username or password don't match
-// Modify the req.session (add a dynamic property that identifies the user) object. It will serialize (store) the object to the session store and send a signed cookie with the session id
+// Modify the req.session (add a dynamic property that identifies the user) object. It will serialize (store) the object to the session store and send a signed cookie with the session id. In this step a session is established
 // Then redirect to the user homepage
 app.post("/login", (req, res) => {
     const { body: { username, password }} = req;
