@@ -19,6 +19,8 @@ const sessionStore = new PostgresSession({
 app.use(express.urlencoded({extended:false}))
 
 // Set and configure express-session as middleware
+// The middlware below also takes the cookie (named "sesiTemuduga" itc) from the client and decodes it to get session id if any
+// Then searches the session store for the session data for that specific session id and attaches the session data to the req.session object
 app.use(
 	session({
         store: sessionStore,
